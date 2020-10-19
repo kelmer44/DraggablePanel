@@ -2,30 +2,30 @@ apply plugin: 'com.android.application'
 apply plugin: 'checkstyle'
 
 dependencies {
-  compile project(':draggablepanel')
-  compile 'com.squareup.picasso:picasso:2.1.1'
-  compile 'javax.inject:javax.inject:1@jar'
-  compile 'com.squareup.dagger:dagger-compiler:1.1.0'
-  compile 'com.jakewharton:butterknife:4.0.1'
-  compile 'com.squareup.dagger:dagger:1.1.0'
-  compile 'com.github.pedrovgs:renderers:1.0.9'
-  compile 'com.google.android.gms:play-services:4.1.32'
-  compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-  compile files('libs/YouTubeAndroidPlayerApi.jar')
+  implementation project(':draggablepanel')
+  implementation 'com.squareup.picasso:picasso:2.5.2'
+  implementation 'com.squareup.dagger:dagger-compiler:1.2.5'
+  implementation 'com.jakewharton:butterknife:10.2.1'
+  implementation 'com.squareup.dagger:dagger:1.2.5'
+  implementation 'com.github.pedrovgs:renderers:1.0.9'
+  implementation "com.google.android.material:material:1.2.1"
+  implementation 'com.google.android.gms:play-services:12.0.1'
+  implementation files('libs/YouTubeAndroidPlayerApi.jar')
 }
 
 android {
   packagingOptions {
     exclude 'META-INF/services/javax.annotation.processing.Processor'
   }
-  compileSdkVersion Integer.parseInt(project.ANDROID_COMPILE_SDK_VERSION)
+  compileSdkVersion 29
   buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 
   defaultConfig {
     versionName project.VERSION_NAME
     versionCode Integer.parseInt(project.VERSION_CODE)
 
-    targetSdkVersion Integer.parseInt(project.ANDROID_TARGET_SDK_VERSION)
+    targetSdkVersion 29
+    minSdkVersion 21
   }
 
 
@@ -40,6 +40,9 @@ android {
 
   lintOptions {
     abortOnError false
+  }
+  compileOptions {
+    targetCompatibility JavaVersion.VERSION_1_8
   }
 }
 
