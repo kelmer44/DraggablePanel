@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fl_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Movie Thumbnail -->
+
+    <View
+        android:id="@+id/iv_thumbnail"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/holo_orange_dark" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/openvid"
+            android:layout_width="0dp"
+            android:layout_margin="4dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="OpenVid" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/showbottomnav"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="Shw BNav" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/hidebottomnav"
+            android:layout_margin="4dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Hde BNav" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/movevidup"
+            android:layout_width="0dp"
+            android:layout_margin="4dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="vid up" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/moveviddown"
+            android:layout_width="0dp"
+            android:layout_margin="4dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="vid dwn" />
+    </LinearLayout>
+    <!-- DraggablePanel -->
+
+    <com.github.pedrovgs.DraggablePanel
+        android:id="@+id/draggable_panel"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        app:enable_horizontal_alpha_effect="false"
+        app:top_fragment_height="@dimen/top_fragment_height"
+        app:top_fragment_margin_bottom="@dimen/top_fragment_margin"
+        app:top_fragment_margin_right="@dimen/top_fragment_margin"
+        app:x_scale_factor="@dimen/x_scale_factor"
+        app:y_scale_factor="@dimen/y_scale_factor" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/bottom_menu" />
+
+</FrameLayout>

@@ -15,8 +15,14 @@
  */
 package com.github.pedrovgs.sample.fragment;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +32,9 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import com.github.pedrovgs.sample.R;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -36,44 +44,58 @@ import com.squareup.picasso.Picasso;
  */
 public class MoviePosterFragment extends Fragment {
 
-  @BindView(R.id.iv_thumbnail) ImageView thumbnailImageView;
+    @BindView(R.id.iv_thumbnail)
+    ImageView thumbnailImageView;
 
-  private String videoPosterThumbnail;
-  private String posterTitle;
+    private String videoPosterThumbnail;
+    private String posterTitle;
 
-  /**
-   * Override method used to initialize the fragment.
-   */
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_movie_poster, container, false);
-    ButterKnife.bind(this, view);
-    Picasso.with(getActivity())
-        .load(videoPosterThumbnail)
-        .placeholder(R.drawable.xmen_placeholder)
-        .into(thumbnailImageView);
-    return view;
-  }
+    /**
+     * Override method used to initialize the fragment.
+     */
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_movie_poster, container, false);
+        ButterKnife.bind(this, view);
+        reloadImage();
+        return view;
+    }
 
-  /**
-   * Show the poster image in the thumbnailImageView widget.
-   */
-  public void setPoster(String videoPosterThumbnail) {
-    this.videoPosterThumbnail = videoPosterThumbnail;
-  }
+    /**
+     * Show the poster image in the thumbnailImageView widget.
+     */
+    public void setPoster(String videoPosterThumbnail) {
+        this.videoPosterThumbnail = videoPosterThumbnail;
+        reloadImage();
+    }
 
-  /**
-   * Store the poster title to show it when the thumbanil view is clicked.
-   */
-  public void setPosterTitle(String posterTitle) {
-    this.posterTitle = posterTitle;
-  }
+    public void reloadImage() {
+        Context context = getContext();
+        if (context != null) {
+            Picasso with = new Picasso.Builder(context).build();
+            with.setLoggingEnabled(true);
+            with.setIndicatorsEnabled(true);
+            with
+                    .load(videoPosterThumbnail)
+                    .placeholder(R.drawable.xmen_placeholder)
+                    .into(thumbnailImageView);
+        }
+    }
 
-  /**
-   * Method triggered when the iv_thumbnail widget is clicked. This method shows a toast with the
-   * poster information.
-   */
-  @OnClick(R.id.iv_thumbnail) void onThubmnailClicked() {
-    Toast.makeText(getActivity(), posterTitle, Toast.LENGTH_SHORT).show();
-  }
+    /**
+     * Store the poster title to show it when the thumbanil view is clicked.
+     */
+    public void setPosterTitle(String posterTitle) {
+        this.posterTitle = posterTitle;
+    }
+
+    /**
+     * Method triggered when the iv_thumbnail widget is clicked. This method shows a toast with the
+     * poster information.
+     */
+    @OnClick(R.id.iv_thumbnail)
+    void onThubmnailClicked() {
+        Toast.makeText(getActivity(), posterTitle, Toast.LENGTH_SHORT).show();
+    }
 }

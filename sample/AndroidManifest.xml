@@ -53,7 +53,7 @@
     <!-- Youtube Sample -->
 
     <activity
-        android:name=".activity.YoutubeSampleActivity"
+        android:name=".activity.BottomNavSampleActivity"
         android:label="@string/youtube_sample_activity_title">
     </activity>
 

@@ -17,7 +17,6 @@ package com.github.pedrovgs.sample.activity;
 
 import android.os.Bundle;
 import androidx.fragment.app.FragmentActivity;
-import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,41 +25,31 @@ import com.github.pedrovgs.DraggableListener;
 import com.github.pedrovgs.DraggablePanel;
 import com.github.pedrovgs.sample.R;
 import com.github.pedrovgs.sample.fragment.MoviePosterFragment;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.squareup.picasso.Picasso;
 
 /**
  * Sample activity created to show a video from YouTube using a YouTubePlayer.
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-public class YoutubeSampleActivity extends FragmentActivity {
+public class BottomNavSampleActivity extends FragmentActivity {
 
-  private static final String YOUTUBE_API_KEY = "AIzaSyC1rMU-mkhoyTvBIdTnYU0dss0tU9vtK48";
-  private static final String VIDEO_KEY = "gsjtg7m1MMM";
   private static final String VIDEO_POSTER_THUMBNAIL =
-      "http://4.bp.blogspot.com/-BT6IshdVsoA/UjfnTo_TkBI/AAAAAAAAMWk/JvDCYCoFRlQ/s1600/"
+      "https://4.bp.blogspot.com/-BT6IshdVsoA/UjfnTo_TkBI/AAAAAAAAMWk/JvDCYCoFRlQ/s1600/"
           + "xmenDOFP.wobbly.1.jpg";
   private static final String SECOND_VIDEO_POSTER_THUMBNAIL =
-      "http://media.comicbook.com/wp-content/uploads/2013/07/x-men-days-of-future-past"
+      "https://media.comicbook.com/wp-content/uploads/2013/07/x-men-days-of-future-past"
           + "-wolverine-poster.jpg";
   private static final String VIDEO_POSTER_TITLE = "X-Men: Days of Future Past";
 
   @BindView(R.id.draggable_panel) DraggablePanel draggablePanel;
-
-  private YouTubePlayer youtubePlayer;
-  private YouTubePlayerSupportFragment youtubeFragment;
 
   /**
    * Initialize the Activity with some injected data.
    */
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_youtube_sample);
+    setContentView(R.layout.activity_bottomnav_sample);
     ButterKnife.bind(this);
-    initializeYoutubeFragment();
     initializeDraggablePanel();
     hookDraggablePanelListeners();
   }
@@ -73,40 +62,24 @@ public class YoutubeSampleActivity extends FragmentActivity {
     draggablePanel.maximize();
   }
 
-  /**
-   * Initialize the YouTubeSupportFrament attached as top fragment to the DraggablePanel widget and
-   * reproduce the YouTube video represented with a YouTube url.
-   */
-  private void initializeYoutubeFragment() {
-    youtubeFragment = new YouTubePlayerSupportFragment();
-    youtubeFragment.initialize(YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
-
-      @Override public void onInitializationSuccess(YouTubePlayer.Provider provider,
-          YouTubePlayer player, boolean wasRestored) {
-        if (!wasRestored) {
-          youtubePlayer = player;
-          youtubePlayer.loadVideo(VIDEO_KEY);
-          youtubePlayer.setShowFullscreenButton(true);
-        }
-      }
-
-      @Override public void onInitializationFailure(YouTubePlayer.Provider provider,
-          YouTubeInitializationResult error) {
-      }
-    });
-  }
 
   /**
    * Initialize and configure the DraggablePanel widget with two fragments and some attributes.
    */
   private void initializeDraggablePanel() {
     draggablePanel.setFragmentManager(getSupportFragmentManager());
-    draggablePanel.setTopFragment(new MoviePosterFragment());
-//    draggablePanel.setTopFragment(youtubeFragment);
-    MoviePosterFragment moviePosterFragment = new MoviePosterFragment();
-    moviePosterFragment.setPoster(VIDEO_POSTER_THUMBNAIL);
-    moviePosterFragment.setPosterTitle(VIDEO_POSTER_TITLE);
-    draggablePanel.setBottomFragment(moviePosterFragment);
+
+    MoviePosterFragment topFragment = new MoviePosterFragment();
+    topFragment.setPoster(SECOND_VIDEO_POSTER_THUMBNAIL);
+    topFragment.setPosterTitle("Top Fragment");
+    draggablePanel.setTopFragment(topFragment);
+
+
+    MoviePosterFragment bottomFragment = new MoviePosterFragment();
+    bottomFragment.setPoster(VIDEO_POSTER_THUMBNAIL);
+    bottomFragment.setPosterTitle(VIDEO_POSTER_TITLE);
+    draggablePanel.setBottomFragment(bottomFragment);
+
     draggablePanel.initializeView();
   }
 
@@ -117,7 +90,7 @@ public class YoutubeSampleActivity extends FragmentActivity {
   private void hookDraggablePanelListeners() {
     draggablePanel.setDraggableListener(new DraggableListener() {
       @Override public void onMaximized() {
-        playVideo();
+
       }
 
       @Override public void onMinimized() {
@@ -125,30 +98,11 @@ public class YoutubeSampleActivity extends FragmentActivity {
       }
 
       @Override public void onClosedToLeft() {
-        pauseVideo();
       }
 
       @Override public void onClosedToRight() {
-        pauseVideo();
       }
     });
   }
 
-  /**
-   * Pause the video reproduced in the YouTubePlayer.
-   */
-  private void pauseVideo() {
-    if (youtubePlayer.isPlaying()) {
-      youtubePlayer.pause();
-    }
-  }
-
-  /**
-   * Resume the video reproduced in the YouTubePlayer.
-   */
-  private void playVideo() {
-    if (!youtubePlayer.isPlaying()) {
-      youtubePlayer.play();
-    }
-  }
 }

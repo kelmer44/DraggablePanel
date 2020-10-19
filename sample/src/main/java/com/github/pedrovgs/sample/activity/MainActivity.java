@@ -18,7 +18,6 @@ package com.github.pedrovgs.sample.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import butterknife.BindView;
@@ -61,7 +60,7 @@ public class MainActivity extends Activity {
   }
 
   @OnClick(R.id.iv_youtube) void openYoutubeSampleActivity() {
-    Intent intent = new Intent(this, YoutubeSampleActivity.class);
+    Intent intent = new Intent(this, BottomNavSampleActivity.class);
     startActivity(intent);
   }
 

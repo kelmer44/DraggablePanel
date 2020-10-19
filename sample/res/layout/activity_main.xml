@@ -82,7 +82,7 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="@string/main_activity_youtube_button_title"
+          android:text="@string/main_activity_bottomnav_button_title"
           style="@style/main_activity_button_title"/>
 
     </FrameLayout>
