@@ -16,7 +16,9 @@
 package com.github.pedrovgs.sample.activity;
 
 import android.os.Bundle;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+
+import androidx.fragment.app.FragmentActivity;
+
 import com.github.pedrovgs.sample.DraggablePanelApplication;
 
 /**
@@ -26,7 +28,7 @@ import com.github.pedrovgs.sample.DraggablePanelApplication;
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-public class DIFragmentActivity extends SherlockFragmentActivity {
+public class DIFragmentActivity extends FragmentActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

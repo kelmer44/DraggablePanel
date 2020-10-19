@@ -18,6 +18,10 @@ package com.github.pedrovgs.sample.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.github.pedrovgs.sample.R;
@@ -27,10 +31,23 @@ import com.github.pedrovgs.sample.R;
  */
 public class MainActivity extends Activity {
 
+
+  @BindView(R.id.iv_video)
+  ImageView video;
+
+
+
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    ButterKnife.inject(this);
+    ButterKnife.bind(this);
+
+//    video.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View v) {
+//        openVideoSampleActivity();
+//      }
+//    });
   }
 
   @OnClick(R.id.iv_places) void openSimpleSampleActivity() {

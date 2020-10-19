@@ -24,8 +24,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import com.github.pedrovgs.DraggableListener;
 import com.github.pedrovgs.DraggableView;
@@ -54,10 +55,10 @@ public class TvShowsActivity extends DIFragmentActivity {
 
   @Inject RendererAdapter<TvShowViewModel> adapter;
 
-  @InjectView(R.id.gv_tv_shows) GridView tvShowsGridView;
-  @InjectView(R.id.iv_fan_art) ImageView fanArtImageView;
-  @InjectView(R.id.lv_episodes) ListView episodesListView;
-  @InjectView(R.id.draggable_view) DraggableView draggableView;
+  @BindView(R.id.gv_tv_shows) GridView tvShowsGridView;
+  @BindView(R.id.iv_fan_art) ImageView fanArtImageView;
+  @BindView(R.id.lv_episodes) ListView episodesListView;
+  @BindView(R.id.draggable_view) DraggableView draggableView;
 
   TextView header;
 
@@ -69,7 +70,7 @@ public class TvShowsActivity extends DIFragmentActivity {
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_tv_shows_sample);
-    ButterKnife.inject(this);
+    ButterKnife.bind(this);
     initializeDraggableView();
     initializeGridView();
     hookListeners();
@@ -147,7 +148,7 @@ public class TvShowsActivity extends DIFragmentActivity {
    */
   private void resetActionBarTitle() {
     tvShowSelected = null;
-    getSupportActionBar().setTitle(R.string.tv_shows_sample_activity_title);
+    getActionBar().setTitle(R.string.tv_shows_sample_activity_title);
   }
 
   /**
@@ -155,7 +156,7 @@ public class TvShowsActivity extends DIFragmentActivity {
    */
   private void updateActionBarTitle() {
     if (tvShowSelected != null) {
-      getSupportActionBar().setTitle(tvShowSelected.getTitle());
+      getActionBar().setTitle(tvShowSelected.getTitle());
     }
   }
 

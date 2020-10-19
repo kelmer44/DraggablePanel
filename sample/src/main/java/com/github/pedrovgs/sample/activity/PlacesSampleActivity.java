@@ -18,16 +18,16 @@ package com.github.pedrovgs.sample.activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.github.pedrovgs.DraggablePanel;
 import com.github.pedrovgs.sample.R;
 import com.github.pedrovgs.sample.fragment.PlaceFragment;
@@ -38,7 +38,6 @@ import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.nineoldandroids.view.ViewHelper;
 import com.pedrogomez.renderers.RendererAdapter;
 import com.squareup.picasso.Picasso;
 import javax.inject.Inject;
@@ -56,10 +55,10 @@ public class PlacesSampleActivity extends DIFragmentActivity {
   private static final int DELAY_MILLIS = 50;
   private static final float ZOOM = 10f;
 
-  @InjectView(R.id.lv_places) ListView placesListView;
-  @InjectView(R.id.draggable_panel) DraggablePanel draggablePanel;
-  @InjectView(R.id.drawer_left) DrawerLayout drawerlayoutLeft;
-  @InjectView(R.id.iv_drawer) ImageView drawerImageView;
+  @BindView(R.id.lv_places) ListView placesListView;
+  @BindView(R.id.draggable_panel) DraggablePanel draggablePanel;
+  @BindView(R.id.drawer_left) DrawerLayout drawerlayoutLeft;
+  @BindView(R.id.iv_drawer) ImageView drawerImageView;
 
   @Inject RendererAdapter<PlaceViewModel> placesAdapter;
 
@@ -68,7 +67,6 @@ public class PlacesSampleActivity extends DIFragmentActivity {
 
   private int lastLoadedPlacePosition;
 
-  private ActionBarDrawerToggle drawerToggle;
 
   /**
    * Initialize the Activity with some injected data.
@@ -76,7 +74,7 @@ public class PlacesSampleActivity extends DIFragmentActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_place_sample);
-    ButterKnife.inject(this);
+    ButterKnife.bind(this);
     initializeFragments();
     initializeListView();
     initializeDraggablePanel();
@@ -88,12 +86,10 @@ public class PlacesSampleActivity extends DIFragmentActivity {
    */
   @Override protected void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
-    drawerToggle.syncState();
   }
 
   @Override public void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
-    drawerToggle.onConfigurationChanged(newConfig);
   }
 
   /**
@@ -253,14 +249,14 @@ public class PlacesSampleActivity extends DIFragmentActivity {
     PlaceViewModel placeViewModel = placesAdapter.getItem(position);
     placeFragment.showPlace(placeViewModel);
 
-    mapFragment.getMap().clear();
-    LatLng latitudeLongitude =
-        new LatLng(placeViewModel.getLatitude(), placeViewModel.getLongitude());
-    MarkerOptions marker = new MarkerOptions().position(latitudeLongitude);
-    marker.title(placeViewModel.getName());
-    marker.snippet(placeViewModel.getLatitude() + " , " + placeViewModel.getLongitude());
-    mapFragment.getMap().addMarker(marker);
-    mapFragment.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, ZOOM));
+//    mapFragment.mna().clear();
+//    LatLng latitudeLongitude =
+//        new LatLng(placeViewModel.getLatitude(), placeViewModel.getLongitude());
+//    MarkerOptions marker = new MarkerOptions().position(latitudeLongitude);
+//    marker.title(placeViewModel.getName());
+//    marker.snippet(placeViewModel.getLatitude() + " , " + placeViewModel.getLongitude());
+//    mapFragment.getMap().addMarker(marker);
+//    mapFragment.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, ZOOM));
   }
 
   /**
@@ -289,27 +285,27 @@ public class PlacesSampleActivity extends DIFragmentActivity {
   }
 
   private void configNavigationDrawer() {
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    getSupportActionBar().setHomeButtonEnabled(true);
-    drawerlayoutLeft.setDrawerShadow(R.drawable.drawer_shadow, Gravity.LEFT);
-    drawerToggle =
-        new ActionBarDrawerToggle(this, drawerlayoutLeft, R.drawable.nav_drawer, R.string.app_name,
-            R.string.app_name) {
-
-          @Override public void onDrawerOpened(View drawerView) {
-            super.onDrawerOpened(drawerView);
-          }
-
-          @Override public void onDrawerClosed(View drawerView) {
-            super.onDrawerClosed(drawerView);
-          }
-
-          @Override public void onDrawerSlide(View drawerView, float slideOffset) {
-            super.onDrawerSlide(drawerView, slideOffset);
-            draggablePanel.slideHorizontally(slideOffset, ViewHelper.getX(drawerView),
-                drawerView.getWidth());
-          }
-        };
-    drawerlayoutLeft.setDrawerListener(drawerToggle);
+//    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//    getSupportActionBar().setHomeButtonEnabled(true);
+//    drawerlayoutLeft.setDrawerShadow(R.drawable.drawer_shadow, Gravity.LEFT);
+//    drawerToggle =
+//        new ActionBarDrawerToggle(this, drawerlayoutLeft, R.drawable.nav_drawer, R.string.app_name,
+//            R.string.app_name) {
+//
+//          @Override public void onDrawerOpened(View drawerView) {
+//            super.onDrawerOpened(drawerView);
+//          }
+//
+//          @Override public void onDrawerClosed(View drawerView) {
+//            super.onDrawerClosed(drawerView);
+//          }
+//
+//          @Override public void onDrawerSlide(View drawerView, float slideOffset) {
+//            super.onDrawerSlide(drawerView, slideOffset);
+//            draggablePanel.slideHorizontally(slideOffset, ViewHelper.getX(drawerView),
+//                drawerView.getWidth());
+//          }
+//        };
+//    drawerlayoutLeft.setDrawerListener(drawerToggle);
   }
 }
