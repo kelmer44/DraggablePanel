@@ -15,6 +15,7 @@
  */
 package com.github.pedrovgs.transformer;
 
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -36,7 +37,7 @@ class ScaleTransformer extends Transformer {
    * @param verticalDragOffset used to calculate the new scale.
    */
   @Override public void updateScale(float verticalDragOffset) {
-    getView().setScaleX(1 - verticalDragOffset / getXScaleFactor());
+//    getView().setScaleX(1 - verticalDragOffset / getXScaleFactor());
     getView().setScaleY(1 - verticalDragOffset / getYScaleFactor());
   }
 
@@ -47,7 +48,14 @@ class ScaleTransformer extends Transformer {
    */
   @Override public void updatePosition(float verticalDragOffset) {
     getView().setPivotX(getView().getWidth() - getMarginRight());
-    getView().setPivotY(getView().getHeight() - getMarginBottom());
+    Log.w("BOTTONAV", "Height " + getView().getHeight() + " Margin Bottom = " +getMarginBottom() + ", " + "Pivot Y " + (getView().getHeight() - getMarginBottom()));
+
+
+    int[] dragViewLocation = new int[2];
+    getView().getLocationInWindow(dragViewLocation);
+    Log.w("BOTTONAV", "Relative position " + getView().getY() + ", absolute on window: " + dragViewLocation[1]);
+
+    getView().setPivotY(2*(getView().getHeight() - getMarginBottom()*2));
   }
 
   /**

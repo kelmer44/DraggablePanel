@@ -16,15 +16,21 @@
 package com.github.pedrovgs.sample.activity;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+
 import androidx.fragment.app.FragmentActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import com.github.pedrovgs.DraggableListener;
 import com.github.pedrovgs.DraggablePanel;
+import com.github.pedrovgs.SlideableDraggablePanel;
 import com.github.pedrovgs.sample.R;
 import com.github.pedrovgs.sample.fragment.MoviePosterFragment;
+import com.github.pedrovgs.sample.view.HideableBottomNavView;
 
 /**
  * Sample activity created to show a video from YouTube using a YouTubePlayer.
@@ -33,76 +39,133 @@ import com.github.pedrovgs.sample.fragment.MoviePosterFragment;
  */
 public class BottomNavSampleActivity extends FragmentActivity {
 
-  private static final String VIDEO_POSTER_THUMBNAIL =
-      "https://4.bp.blogspot.com/-BT6IshdVsoA/UjfnTo_TkBI/AAAAAAAAMWk/JvDCYCoFRlQ/s1600/"
-          + "xmenDOFP.wobbly.1.jpg";
-  private static final String SECOND_VIDEO_POSTER_THUMBNAIL =
-      "https://media.comicbook.com/wp-content/uploads/2013/07/x-men-days-of-future-past"
-          + "-wolverine-poster.jpg";
-  private static final String VIDEO_POSTER_TITLE = "X-Men: Days of Future Past";
+    private static final String VIDEO_POSTER_THUMBNAIL =
+            "https://4.bp.blogspot.com/-BT6IshdVsoA/UjfnTo_TkBI/AAAAAAAAMWk/JvDCYCoFRlQ/s1600/"
+                    + "xmenDOFP.wobbly.1.jpg";
+    private static final String SECOND_VIDEO_POSTER_THUMBNAIL =
+            "https://media.comicbook.com/wp-content/uploads/2013/07/x-men-days-of-future-past"
+                    + "-wolverine-poster.jpg";
+    private static final String VIDEO_POSTER_TITLE = "X-Men: Days of Future Past";
 
-  @BindView(R.id.draggable_panel) DraggablePanel draggablePanel;
+    @BindView(R.id.draggable_panel)
+    SlideableDraggablePanel draggablePanel;
+    @BindView(R.id.bottom_nav)
+    HideableBottomNavView bottomNavView;
 
-  /**
-   * Initialize the Activity with some injected data.
-   */
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_bottomnav_sample);
-    ButterKnife.bind(this);
-    initializeDraggablePanel();
-    hookDraggablePanelListeners();
-  }
+    @OnClick(R.id.openvid)
+    public void openVid() {
+        draggablePanel.maximize();
+    }
 
-  /**
-   * Method triggered when the iv_thumbnail widget is clicked. This method maximize the
-   * DraggablePanel.
-   */
-  @OnClick(R.id.iv_thumbnail) void onContainerClicked() {
-    draggablePanel.maximize();
-  }
+    @OnClick(R.id.showbottomnav)
+    public void showBottomNav() {
+        bottomNavView.show();
+        draggablePanel.slideUp();
+    }
 
+    @OnClick(R.id.hidebottomnav)
+    public void hideBottomNav() {
+        bottomNavView.hide();
+        draggablePanel.slideDown();
+    }
 
-  /**
-   * Initialize and configure the DraggablePanel widget with two fragments and some attributes.
-   */
-  private void initializeDraggablePanel() {
-    draggablePanel.setFragmentManager(getSupportFragmentManager());
+    @OnClick(R.id.movevidup)
+    public void MoveVidUp() {
+        draggablePanel.slideUp();
+    }
 
-    MoviePosterFragment topFragment = new MoviePosterFragment();
-    topFragment.setPoster(SECOND_VIDEO_POSTER_THUMBNAIL);
-    topFragment.setPosterTitle("Top Fragment");
-    draggablePanel.setTopFragment(topFragment);
+    @OnClick(R.id.moveviddown)
+    public void MoveVidDown() {
+        draggablePanel.slideDown();
+    }
 
 
-    MoviePosterFragment bottomFragment = new MoviePosterFragment();
-    bottomFragment.setPoster(VIDEO_POSTER_THUMBNAIL);
-    bottomFragment.setPosterTitle(VIDEO_POSTER_TITLE);
-    draggablePanel.setBottomFragment(bottomFragment);
+    /**
+     * Initialize the Activity with some injected data.
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_bottomnav_sample);
+        ButterKnife.bind(this);
+        initializeDraggablePanel();
+        hookDraggablePanelListeners();
+    }
 
-    draggablePanel.initializeView();
-  }
+    /**
+     * Method triggered when the iv_thumbnail widget is clicked. This method maximize the
+     * DraggablePanel.
+     */
+    @OnClick(R.id.iv_thumbnail)
+    void onContainerClicked() {
+        draggablePanel.maximize();
+    }
 
-  /**
-   * Hook the DraggableListener to DraggablePanel to pause or resume the video when the
-   * DragglabePanel is maximized or closed.
-   */
-  private void hookDraggablePanelListeners() {
-    draggablePanel.setDraggableListener(new DraggableListener() {
-      @Override public void onMaximized() {
 
-      }
+    /**
+     * Initialize and configure the DraggablePanel widget with two fragments and some attributes.
+     */
+    private void initializeDraggablePanel() {
+        draggablePanel.setFragmentManager(getSupportFragmentManager());
 
-      @Override public void onMinimized() {
-        //Empty
-      }
+        MoviePosterFragment topFragment = new MoviePosterFragment();
+        topFragment.setPoster(SECOND_VIDEO_POSTER_THUMBNAIL);
+        topFragment.setPosterTitle("Top Fragment");
+        draggablePanel.setTopFragment(topFragment);
 
-      @Override public void onClosedToLeft() {
-      }
 
-      @Override public void onClosedToRight() {
-      }
-    });
-  }
+        MoviePosterFragment bottomFragment = new MoviePosterFragment();
+        bottomFragment.setPoster(VIDEO_POSTER_THUMBNAIL);
+        bottomFragment.setPosterTitle(VIDEO_POSTER_TITLE);
+        draggablePanel.setBottomFragment(bottomFragment);
+
+
+        draggablePanel.initializeView();
+
+
+        draggablePanel.post(new Runnable() {
+            @Override
+            public void run() {
+                int[] bottomNavLocation = new int[2];
+                bottomNavView.getLocationOnScreen(bottomNavLocation);
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+                int upMargin = displayMetrics.heightPixels - bottomNavLocation[1];
+//                        + getResources().getDimensionPixelSize(R.dimen.single_spacing);
+                Log.v("BOTTONAV", "Bottom Nav height " + bottomNavView.getMeasuredHeight() + " upMargin=" + upMargin);
+                Log.i("BOTTONAV", "Location of bottom nav: " + bottomNavLocation[0] + ", " + bottomNavLocation[1] + ", screen w=" + displayMetrics.widthPixels + ", " + "h=" + displayMetrics.heightPixels);
+//                draggablePanel.setTopFragmentMarginBottom(bottomNavView.getMeasuredHeight());
+                draggablePanel.setMargins(bottomNavView.getMeasuredHeight(), 0, true);
+            }
+        });
+
+    }
+
+    /**
+     * Hook the DraggableListener to DraggablePanel to pause or resume the video when the
+     * DragglabePanel is maximized or closed.
+     */
+    private void hookDraggablePanelListeners() {
+        draggablePanel.setDraggableListener(new DraggableListener() {
+            @Override
+            public void onMaximized() {
+
+            }
+
+            @Override
+            public void onMinimized() {
+                //Empty
+            }
+
+            @Override
+            public void onClosedToLeft() {
+            }
+
+            @Override
+            public void onClosedToRight() {
+            }
+        });
+    }
 
 }

@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
     startActivity(intent);
   }
 
-  @OnClick(R.id.iv_youtube) void openYoutubeSampleActivity() {
+  @OnClick(R.id.iv_youtube) void openBottomNavSimpleActivity() {
     Intent intent = new Intent(this, BottomNavSampleActivity.class);
     startActivity(intent);
   }

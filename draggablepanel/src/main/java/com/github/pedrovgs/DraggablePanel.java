@@ -44,7 +44,7 @@ public class DraggablePanel extends FrameLayout {
   private static final boolean DEFAULT_ENABLE_TOUCH_LISTENER = true;
   private static final boolean DEFAULT_TOP_FRAGMENT_RESIZE = false;
 
-  private DraggableView draggableView;
+  protected DraggableView draggableView;
   private DraggableListener draggableListener;
 
   private FragmentManager fragmentManager;
@@ -194,6 +194,7 @@ public class DraggablePanel extends FrameLayout {
    */
   public void setTopFragmentMarginBottom(int topFragmentMarginBottom) {
     this.topFragmentMarginBottom = topFragmentMarginBottom;
+    this.draggableView.setTopViewMarginBottom(topFragmentMarginBottom);
   }
 
   /**
@@ -370,4 +371,5 @@ public class DraggablePanel extends FrameLayout {
           "You have to set top and bottom fragment before initialize DraggablePanel");
     }
   }
+
 }

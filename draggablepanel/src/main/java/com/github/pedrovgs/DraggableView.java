@@ -42,8 +42,8 @@ public class DraggableView extends RelativeLayout {
   private static final int DEFAULT_SCALE_FACTOR = 2;
   private static final int DEFAULT_TOP_VIEW_MARGIN = 30;
   private static final int DEFAULT_TOP_VIEW_HEIGHT = -1;
-  private static final float SLIDE_TOP = 0f;
-  private static final float SLIDE_BOTTOM = 1f;
+  public static final float SLIDE_TOP = 0f;
+  public static final float SLIDE_BOTTOM = 1f;
   private static final float MIN_SLIDE_OFFSET = 0.1f;
   private static final boolean DEFAULT_ENABLE_HORIZONTAL_ALPHA_EFFECT = true;
   private static final boolean DEFAULT_ENABLE_CLICK_TO_MAXIMIZE = false;
@@ -644,7 +644,8 @@ public class DraggableView extends RelativeLayout {
    */
   private void initializeTransformer() {
     TransformerFactory transformerFactory = new TransformerFactory();
-    transformer = transformerFactory.getTransformer(topViewResize, dragView, this);
+//    transformer = transformerFactory.getTransformer(topViewResize, dragView, this);
+        transformer = transformerFactory.getTransformer(true, dragView, this);
     transformer.setViewHeight(topViewHeight);
     transformer.setXScaleFactor(scaleFactorX);
     transformer.setYScaleFactor(scaleFactorY);
@@ -694,7 +695,7 @@ public class DraggableView extends RelativeLayout {
    * @param slideOffset to apply
    * @return true if the view is slided.
    */
-  private boolean smoothSlideTo(float slideOffset) {
+  public boolean smoothSlideTo(float slideOffset) {
     final int topBound = getPaddingTop();
     int x = (int) (slideOffset * (getWidth() - transformer.getMinWidthPlusMarginRight()));
     int y = (int) (topBound + slideOffset * getVerticalDragRange());
