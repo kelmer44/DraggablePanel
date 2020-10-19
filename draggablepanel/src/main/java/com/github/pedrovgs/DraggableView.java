@@ -644,8 +644,8 @@ public class DraggableView extends RelativeLayout {
    */
   private void initializeTransformer() {
     TransformerFactory transformerFactory = new TransformerFactory();
-//    transformer = transformerFactory.getTransformer(topViewResize, dragView, this);
-        transformer = transformerFactory.getTransformer(true, dragView, this);
+    transformer = transformerFactory.getTransformer(topViewResize, dragView, this);
+//        transformer = transformerFactory.getTransformer(true, dragView, this);
     transformer.setViewHeight(topViewHeight);
     transformer.setXScaleFactor(scaleFactorX);
     transformer.setYScaleFactor(scaleFactorY);

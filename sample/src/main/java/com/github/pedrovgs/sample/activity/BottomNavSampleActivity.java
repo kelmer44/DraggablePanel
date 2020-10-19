@@ -54,7 +54,7 @@ public class BottomNavSampleActivity extends FragmentActivity {
 
     @OnClick(R.id.openvid)
     public void openVid() {
-        draggablePanel.maximize();
+        Log.w("BOTTONAV","ISMINIMIZED?" + draggablePanel.isMinimized());
     }
 
     @OnClick(R.id.showbottomnav)
@@ -131,12 +131,11 @@ public class BottomNavSampleActivity extends FragmentActivity {
                 DisplayMetrics displayMetrics = new DisplayMetrics();
                 getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-                int upMargin = displayMetrics.heightPixels - bottomNavLocation[1];
-//                        + getResources().getDimensionPixelSize(R.dimen.single_spacing);
+                int upMargin = bottomNavView.getMeasuredHeight() + getResources().getDimensionPixelSize(R.dimen.single_spacing);
+                int downMargin = getResources().getDimensionPixelSize(R.dimen.single_spacing);
                 Log.v("BOTTONAV", "Bottom Nav height " + bottomNavView.getMeasuredHeight() + " upMargin=" + upMargin);
                 Log.i("BOTTONAV", "Location of bottom nav: " + bottomNavLocation[0] + ", " + bottomNavLocation[1] + ", screen w=" + displayMetrics.widthPixels + ", " + "h=" + displayMetrics.heightPixels);
-//                draggablePanel.setTopFragmentMarginBottom(bottomNavView.getMeasuredHeight());
-                draggablePanel.setMargins(bottomNavView.getMeasuredHeight(), 0, true);
+                draggablePanel.setMargins(upMargin, downMargin, true);
             }
         });
 

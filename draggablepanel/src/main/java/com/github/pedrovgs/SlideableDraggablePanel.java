@@ -2,6 +2,7 @@ package com.github.pedrovgs;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 
 public class SlideableDraggablePanel extends DraggablePanel {
     public SlideableDraggablePanel(Context context) {
@@ -32,14 +33,18 @@ public class SlideableDraggablePanel extends DraggablePanel {
     public void slideUp() {
         setTopFragmentMarginBottom(upMargin);
         if (draggableView != null) {
+            Log.i("BOTTONAV", "SmoothSliding");
             draggableView.smoothSlideTo(DraggableView.SLIDE_BOTTOM);
+            draggableView.changeDragViewPosition();
         }
     }
 
     public void slideDown() {
         setTopFragmentMarginBottom(downMargin);
         if (draggableView != null) {
+            Log.i("BOTTONAV", "SmoothSliding");
             draggableView.smoothSlideTo(DraggableView.SLIDE_BOTTOM);
+            draggableView.changeDragViewPosition();
         }
     }
 }
