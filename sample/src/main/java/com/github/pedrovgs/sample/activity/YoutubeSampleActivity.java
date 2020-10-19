@@ -48,7 +48,6 @@ public class YoutubeSampleActivity extends FragmentActivity {
           + "-wolverine-poster.jpg";
   private static final String VIDEO_POSTER_TITLE = "X-Men: Days of Future Past";
 
-  @BindView(R.id.iv_thumbnail) ImageView thumbnailImageView;
   @BindView(R.id.draggable_panel) DraggablePanel draggablePanel;
 
   private YouTubePlayer youtubePlayer;
@@ -102,16 +101,13 @@ public class YoutubeSampleActivity extends FragmentActivity {
    */
   private void initializeDraggablePanel() {
     draggablePanel.setFragmentManager(getSupportFragmentManager());
+    draggablePanel.setTopFragment(new MoviePosterFragment());
 //    draggablePanel.setTopFragment(youtubeFragment);
     MoviePosterFragment moviePosterFragment = new MoviePosterFragment();
     moviePosterFragment.setPoster(VIDEO_POSTER_THUMBNAIL);
     moviePosterFragment.setPosterTitle(VIDEO_POSTER_TITLE);
     draggablePanel.setBottomFragment(moviePosterFragment);
     draggablePanel.initializeView();
-    Picasso.with(this)
-        .load(SECOND_VIDEO_POSTER_THUMBNAIL)
-        .placeholder(R.drawable.xmen_placeholder)
-        .into(thumbnailImageView);
   }
 
   /**
